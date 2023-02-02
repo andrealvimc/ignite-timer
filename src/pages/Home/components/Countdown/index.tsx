@@ -31,7 +31,6 @@ export const Countdown = () => {
     }
   }, [minutes, seconds, activeCycle])
 
-  // LOGICA DO COUNTDOWN
   useEffect(() => {
     let interval: NodeJS.Timeout
 
@@ -68,7 +67,13 @@ export const Countdown = () => {
     return () => {
       clearInterval(interval)
     }
-  }, [activeCycle, totalSeconds, activeCycleId, setCycles])
+  }, [
+    activeCycle,
+    totalSeconds,
+    activeCycleId,
+    setCycles,
+    setAmountSecondsPast,
+  ])
 
   return (
     <CountdownContainer>
