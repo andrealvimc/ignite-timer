@@ -1,3 +1,7 @@
 {
-  "extends": "@rocketseat/eslint-config/react"
+  "extends": "@rocketseat/eslint-config/react",
+  "rules": {
+    "array-callback-return": "off",
+    "no-unused-vars": "off"
+  }
 }

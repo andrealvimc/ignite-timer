@@ -16,17 +16,17 @@ import {
   StartCountdownButton,
   StopCountdownButton,
 } from './styles'
+import {
+  ActionTypes,
+  addNewCycleAction,
+  interruptCycleAction,
+} from '../../reducers/cycles/actions'
 
 type NewCycleFormData = zod.infer<typeof newCycleFormSchema>
 
 export function Home() {
-  const {
-    activeCycle,
-    setActiveCycleId,
-    setCycles,
-    activeCycleId,
-    setAmountSecondsPast,
-  } = useCycles()
+  const { activeCycle, dispatch, activeCycleId, setAmountSecondsPast } =
+    useCycles()
 
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormSchema),
@@ -48,28 +48,15 @@ export function Home() {
       startDateTime: new Date(),
     }
 
-    setCycles((state) => [...state, newCycle])
-    setActiveCycleId(id)
+    dispatch(addNewCycleAction(newCycle))
+
     setAmountSecondsPast(0)
 
     reset()
   }
 
   const handleInterruptCycle = () => {
-    setCycles((state) =>
-      state.map((cycle) => {
-        if (cycle.id === activeCycleId) {
-          return {
-            ...cycle,
-            interruptedDate: new Date(),
-          }
-        }
-
-        return cycle
-      }),
-    )
-
-    setActiveCycleId(null)
+    dispatch(interruptCycleAction())
   }
 
   document.title = `Ignite Timer`
